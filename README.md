@@ -28,3 +28,6 @@ pacemPi
 + Python 3.4
 + Django 1.8dev
 + ... 
+
+##План за слеващия **milestone**
+ [milestone#2](https://github.com/AngelTsanev/pacemPI/blob/master/milestone2.md)
