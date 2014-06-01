@@ -78,6 +78,9 @@ USE_L10N = True
 USE_TZ = True
 
 
+# URL of the login page.
+LOGIN_URL = '/login/'
+
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/dev/howto/static-files/
 
