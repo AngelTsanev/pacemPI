@@ -84,5 +84,7 @@ LOGIN_URL = '/login/'
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/dev/howto/static-files/
 
-STATIC_URL = '/static/'
+STATIC_ROOT = ''
+STATICFILES_DIRS = [os.path.join(BASE_DIR, 'templates/assets')]
+STATIC_URL = '/assets/'
 TEMPLATE_DIRS = [os.path.join(BASE_DIR, 'templates')]
