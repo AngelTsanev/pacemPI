@@ -27,7 +27,7 @@ def add_new_entry(table_name, data):
 
 def mesure_temperature():
     while True:
-        sleep(600) #10 minutes
+        time.sleep(600) #10 minutes
         date = time.strftime("%d/%m/%Y") #00/00/0000
         temperature = 10.53
         create_table(date)
