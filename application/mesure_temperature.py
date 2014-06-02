@@ -12,6 +12,8 @@ def create_table(name):
         (time TEXT, temperature REAL)'''.format('table': name)
     cursor.execute(sql_request)
     connection.commit()
+    cursor.close()
+    connection.close()
 
 def add_new_entry(table_name, data):
     connection = lite.connect(location) 
@@ -20,5 +22,13 @@ def add_new_entry(table_name, data):
     sql_request = 'insert into {table} values (?,?)'.format('table':table_name)
     cursor.execute(sql_request, [current_time, data])
     connection.commit()
+    cursor.close()
+    connection.close()
 
-
+def mesure_temperature():
+    while True:
+        sleep(600) #10 minutes
+        date = time.strftime("%d/%m/%Y") #00/00/0000
+        temperature = 10.53
+        create_table(date)
+        add_new_entry(date, temperature)
