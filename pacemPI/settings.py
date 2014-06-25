@@ -88,3 +88,7 @@ STATIC_ROOT = ''
 STATICFILES_DIRS = [os.path.join(BASE_DIR, 'templates/assets')]
 STATIC_URL = '/assets/'
 TEMPLATE_DIRS = [os.path.join(BASE_DIR, 'templates')]
+
+#SMTP server info
+#EMAIL_HOST = 'localhost'
+#EMAIL_PORT = 1025
