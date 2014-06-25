@@ -25,7 +25,7 @@ pacemPi
 
 ####Необходим софтуер: 
 >+ Операционна система на SD картата (примерно **Raspbian** Debian Wheezy)
-+ Python 3.4
++ Python 3.x
 + Django 1.8dev
 + ... 
 
