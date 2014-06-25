@@ -1,6 +1,8 @@
 from django.shortcuts import render_to_response
+from django.http import HttpResponse
 from django.contrib.auth.decorators import login_required
 import os
+from application.webgui import *
 
 @login_required
 def application_main_page(request):
@@ -28,4 +30,5 @@ def application_main_page(request):
     #		'$base/segments/%03d.ts' ''')
 
     #os.system("raspivid -t 0 -w 960 -h 540 -fps 25 -b 500000 -vf -o - | ffmpeg -i - -vcodec copy -an -f flv ") # -metadata streamName=myStream tcp://0.0.0.0:6666")
-    return render_to_response('application/index.html')
+    return HttpResponse(make_html())
+   #return render_to_response('application/index.html')

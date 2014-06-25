@@ -28,5 +28,5 @@ def tmp102_read_temperature(): #we read from two tmp102 sensor, we return the av
     second_temperature = (((msb_second_sensor << 8) | lsb_second_sensor) >> 4) * 0.0625
     return (first_temperature + second_temperature) / 2.0
     
-print("Temperature is : %.3f" % tmp102_read_temperature())
+#print("Temperature is : %.3f" % tmp102_read_temperature())
 
