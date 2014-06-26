@@ -16,11 +16,9 @@ def HTMLHead(title, table):
      <link rel="icon" type="image/png"
        href="/static/favicon.ico">
 
-     <title>
-    {}
-     </title>
-    
-    {}
+     <title>{}</title>
+
+       {}
 
     </head>""" .format(title, graph_script(table))
     return HTMLHead
@@ -30,17 +28,17 @@ def HTMLHead(title, table):
 # return a list of records from the database
 def get_data(interval):
 
-    conn=sqlite3.connect(dbname)
-    curs=conn.cursor()
+    connection = sqlite3.connect(dbname)
+    cursor = connection.cursor()
 
     if interval == None:
-        curs.execute("SELECT * FROM current_day")
+        cursor.execute("SELECT * FROM current_day")
     else:
-        curs.execute("SELECT * FROM  current_day WHERE timestamp>datetime('now', 'localtime', '-{} hours')".format(interval))
+        cursor.execute("SELECT * FROM  current_day WHERE timestamp>datetime('now', 'localtime', '-{} hours')".format(interval))
         
-    rows=curs.fetchall()
+    rows = cursor.fetchall()
 
-    conn.close()
+    connection.close()
 
     return rows
  
@@ -50,12 +48,12 @@ def create_table(rows):
     chart_table=""
 
     for row in rows[:-1]:
-        rowstr="['{0}', {1}],\n".format(str(row[0]),str(row[1]))
-        chart_table+=rowstr
+        row_string = "['{0}', {1}],\n".format(str(row[0]),str(row[1]))
+        chart_table += row_string
 
-    row=rows[-1]
-    rowstr="['{0}', {1}]\n".format(str(row[0]),str(row[1]))
-    chart_table+=rowstr
+    row = rows[-1]
+    row_string = "['{0}', {1}]\n".format(str(row[0]),str(row[1]))
+    chart_table += row_string
 
     return chart_table
 
@@ -92,7 +90,7 @@ chart.draw(data, options);
 # print the div that contains the graph
 def show_graph():
     GRAPH = """
-    <h2>Temperature Chart</h2>
+    <center><h2>Temperature Chart</h2></center>
     <div id="chart_div" style="width: 1350px; height: 750px;"></div>
     """
     return GRAPH
@@ -103,56 +101,56 @@ def show_graph():
 # argument option is the number of hours
 def show_stats(option):
 
-    conn=sqlite3.connect(dbname)
-    curs=conn.cursor()
+    connection = sqlite3.connect(dbname)
+    cursor = connection.cursor()
 
     if option is None:
         option = str(24)
 
-    curs.execute("""SELECT timestamp, max(temperature) FROM  current_day WHERE 
+    cursor.execute("""SELECT timestamp, max(temperature) FROM  current_day WHERE 
     timestamp>datetime('now', 'localtime', '-%s hour') AND timestamp<=datetime('now', 'localtime')""" % option)
-    rowmax=curs.fetchone()
-    rowstrmax="{0}   {1}C".format(str(rowmax[0]), "%.3f " % rowmax[1])
+    data_max = cursor.fetchone()
+    string_max = "{0}   {1}C".format(str(data_max[0]), "%.3f " % data_max[1])
 
-    curs.execute("""SELECT timestamp, min(temperature) FROM  current_day WHERE
+    cursor.execute("""SELECT timestamp, min(temperature) FROM  current_day WHERE
     timestamp>datetime('now', 'localtime', '-%s hour') AND timestamp<=datetime('now', 'localtime')""" % option)
-    rowmin=curs.fetchone()
-    rowstrmin="{0}   {1}C".format(str(rowmin[0]), "%.3f " % rowmin[1])
+    data_min = cursor.fetchone()
+    string_min = "{0}   {1}C".format(str(data_min[0]), "%.3f " % data_min[1])
 
-    curs.execute("""SELECT avg(temperature) FROM  current_day WHERE 
+    cursor.execute("""SELECT avg(temperature) FROM  current_day WHERE 
     timestamp>datetime('now', 'localtime', '-%s hour') AND timestamp<=datetime('now', 'localtime')""" % option)
-    rowavg=curs.fetchone()
+    data_average = cursor.fetchone()
     
     STATS = """
     <hr>
-    <h2>Minumum temperature</h2>
-    {}
-    <h2>Maximum temperature</h2>
-    {}
-    <h2>Average temperature</h2>
-    {}
+    <center><h2>Minumum temperature</h2></center>
+    <center>{0}</center>
+    <center><h2>Maximum temperature</h2></center>
+    <center>{1}</center>
+    <center><h2>Average temperature</h2></center>
+    <center>{2}</center>
     <hr>
-    <h2>In the last hour:</h2>
-    <table>
-    <tr><td><strong>Date/Time</strong></td><td><strong>Temperature</strong></td></tr>""".format(rowstrmin, rowstrmax, "%.3f C" % rowavg)
+    <center><h2>In the last hour:</h2></center>
+    <center><table>
+    <tr><td><strong>Date/Time</strong></td><td><strong>Temperature</strong></td></tr>""".format(string_min, string_max, "%.3f C" % data_average)
 
-    curs.execute("""SELECT * FROM current_day 
+    cursor.execute("""SELECT * FROM current_day 
     WHERE timestamp>datetime('now', 'localtime', '-1 hour') AND timestamp<=datetime('now', 'localtime')""")
-    rows = curs.fetchall()
+    rows = cursor.fetchall()
     print(rows)
     for row in rows:
-        STATS += "\n<tr><td>{0}&emsp;&emsp;</td><td>{1}C</td></tr>".format(str(row[0]), str(row[1]))
+        STATS += "\n<tr><td>{0}    </td><td>{1}C</td></tr>".format(str(row[0]), str(row[1]))
     
-    STATS += "\n</table>"
+    STATS += "\n</table></center>"
     STATS += "\n<hr>"
 
-    conn.close()
+    connection.close()
     return STATS
 
 
 
 
-def time_selector(option):
+def time_selector():
     TIME_SECTION = """
     <h3><center>Get log for the last :</center></h3>
     <center>
@@ -182,19 +180,6 @@ def time_selector(option):
     return TIME_SECTION
 
 
-# check that the option is valid
-# and not an SQL injection
-def validate_input(option_str):
-    # check that the option string represents a number
-    if option_str.isalnum():
-        # check that the option is within a specific range
-        if int(option_str) > 0 and int(option_str) <= 24:
-            return option_str
-        else:
-            return None
-    else:
-        return None
-
 
 # main function
 # This is where the program starts
@@ -210,27 +195,36 @@ def make_html(option):
     # get data from the database
     records = get_data(option)
 
+    
     if len(records) != 0:
         # convert the data into a table
         table = create_table(records)
     else:
         print("No data found")
-        return
+        return """
+        <html>
+         <body bgcolor="#E6E6FA">
+          <center><h1>PacemPI Temperature Logger</h1></center>
+            {}
+           <center>Sorry NO data found</center>
+         </body>
+        </html> """.format(time_selector())
 
     # start printing the page
     HTML += "\n<html>"
     # print the head section including the table
     # used by the javascript for the chart
-    HTML += HTMLHead("Temperature Logger", table)
+    HTML += HTMLHead("PacemPI Temperature", table)
 
     # print the page body
-    HTML += "\n<body>"
-    HTML += "\n<h1>Temperature Logger</h1>"
-    HTML += "\n<hr>"
-    HTML += time_selector(option)
+    HTML += """
+    <body bgcolor="#E6E6FA">
+    <center><h1>PacemPI Temperature Logger</h1></center>
+    <hr><center>"""
+    HTML += time_selector()
     HTML += show_graph()
     HTML += show_stats(option)
-    HTML += "\n</body>"
+    HTML += "</center>\n</body>"
     HTML += "\n</html>"
     sys.stdout.flush()
     return HTML
