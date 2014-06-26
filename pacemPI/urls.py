@@ -1,10 +1,11 @@
-from django.conf.urls import include, url
+from django.conf.urls import * #include, url
 from pacemPI.views import *
 from django.contrib import * #admin
 
 urlpatterns = [
     url(r'^application/', include('application.urls')),
     url(r'^admin/', include(admin.site.urls)),
+    #url(r'^favicon\.ico$', {'url': '/static/images/favicon.ico'}),
     url(r'^$', main_page),
 
     # Login / logout.

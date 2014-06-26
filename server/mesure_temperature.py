@@ -5,8 +5,8 @@ from tmp102 import tmp102_read_temperature
 #location of the data base
 location = '../db.sqlite3'
 CURRENT_DAY_TABLE = 'current_day'
-LAST_WEEK_TABLE = 'last_week'
-HISTORY_TABLE_NAME = 'history'
+#LAST_WEEK_TABLE = 'last_week'
+#HISTORY_TABLE_NAME = 'history'
 #so we assume we have created these two tables manualy
 
 '''
@@ -30,7 +30,7 @@ def add_new_entry(temperature):
     cursor = connection.cursor()
     #sql_request = 'insert into {table} values (?,?)'.format('table':CURRENT_DAY_TABLE)
     #cursor.execute(sql_request, [current_time, data])
-    cursor.execute("INSERT INTO {} values(datetime('now'), (?))"
+    cursor.execute("INSERT INTO {} values(datetime('now', 'localtime'), (?))"
                   .format(CURRENT_DAY_TABLE), (temperature,))
 
     connection.commit()
@@ -39,12 +39,13 @@ def add_new_entry(temperature):
 
 
 def mesure_temperature():
-    while True:
-        time.sleep(5) 
+    while True: 
         #date = time.strftime("%d/%m/%Y") #00/00/0000
         temperature = tmp102_read_temperature()
         #create_table(date)
         add_new_entry(temperature)
         print(temperature)
+        time.sleep(900)
+
 
 mesure_temperature()
