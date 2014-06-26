@@ -10,9 +10,7 @@ def application_main_page(request):
     If users are authenticated, direct them to the main page. Otherwise, take
     them to the login page.
     """
-    
-    #os.system("raspivid  -ih -t 0 -w 720 -h 405 -fps 25 -b 20000000 -o -")
-    #os.system('echo aladin')
+    #os.system("raspistill -w 640 -h 480 -n -q 15 -o /tmp/stream/pic.jpg -tl 100 -t 9999999 2> /dev/null")
     return render_to_response('application/index.html')
 
 def application_temperature(request, interval):

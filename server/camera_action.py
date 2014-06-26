@@ -1,6 +1,7 @@
 import smtplib
 import picamera
 import time
+import os
 from email.mime.image import MIMEImage
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText  
@@ -40,6 +41,7 @@ def send_mail(filename):
     #server.quit()
 
 def take_picture(filename):
+    os.system("killall raspistill")
     with picamera.PiCamera() as camera:
         camera.resolution = (1024, 768)
         camera.start_preview()
@@ -47,6 +49,7 @@ def take_picture(filename):
         time.sleep(0.5)
         camera.capture(IMAGE_FOLDER + filename)
         camera.stop_preview()
+        os.system("raspistill -w 640 -h 480 -q 20 -o /tmp/stream/pic.jpg -tl 50 -t 9999999 2> /dev/null &")
 
 def alert():
     filename = time.strftime("%d%m%H%M%S") + '.jpg'
