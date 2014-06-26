@@ -49,7 +49,7 @@ def take_picture(filename):
         time.sleep(0.5)
         camera.capture(IMAGE_FOLDER + filename)
         camera.stop_preview()
-        os.system("raspistill -w 640 -h 480 -q 20 -o /tmp/stream/pic.jpg -tl 50 -t 9999999 2> /dev/null &")
+    os.system("nohup raspistill -w 640 -h 480 -q 20 -o /tmp/stream/pic.jpg -tl 50 -t 9999999 > /dev/null 2>&1 & ")
 
 def alert():
     filename = time.strftime("%d%m%H%M%S") + '.jpg'

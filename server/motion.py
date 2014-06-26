@@ -1,6 +1,7 @@
 import RPi.GPIO as GPIO
 import camera_action
 import time
+import os
 
 def sense_motion():
     GPIO.setmode(GPIO.BOARD)
@@ -28,6 +29,7 @@ def sense_motion():
 
         except KeyboardInterrupt:
              print(" Quit")
+             os.system("nohup raspistill -w 640 -h 480 -q 20 -o /tmp/stream/pic.jpg -tl 50 -t 9999999 > /dev/null 2>&1 & ")
              GPIO.cleanup()
              exit()
 
