@@ -4,29 +4,46 @@
 {% endcomment %}
 
 {% block head %}
-  <title>Application | {% block title %}{% endblock %}</title>
+  <title>Live Stream</title>
 {% endblock %}
 
 {% block body %}
   <header>
-    <h1>Application</h1>
+    <center><h1>Live Stream</h1></center>
   </header>
 
-  <section>
-    <ul>
-      <li><a href="/">home</a></li>
-      <li><a href="/logout/">logout</a></li>
-    </ul>
-  </section>
-
-
+ <center>
+  <TABLE BORDER="0">
+   <TR>
+     <TD>
+      <FORM METHOD="LINK" ACTION="/">
+       <INPUT TYPE="submit" VALUE="home">
+      </FORM>
+     </TD>
+     <TD>
+      <FORM METHOD="LINK" ACTION="/logout/">
+       <INPUT TYPE="submit" VALUE="Logout">
+      </FORM>
+     </TD>
+     <TD>
+      <FORM METHOD="LINK" ACTION="/application/temperature/24">
+        <INPUT TYPE="submit" VALUE="Temperature Log">
+      </FORM>
+     </TD>
+    </TR>
+   </TABLE>
+  </center>   
+ <hr>
+ <center>
   <img src="http://46.238.17.97:8080/?action=stream"/>
   <script type="text/javascript">
     document.getElementById('some_id').src = document.getElementById('some_id').src + '?unique=' + new Date().valueOf();
   </script>
+ </center>
   {% block content %}{% endblock %}
-
+ <hr>
   <footer>
-    <span>pacemPi 2014</span>
+   <center><span><h2>pacemPi 2014</h2></span></center>
   </footer>
+ <hr>
 {% endblock %}

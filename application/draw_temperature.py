@@ -152,25 +152,32 @@ def show_stats(option):
 
 def time_selector():
     TIME_SECTION = """
-    <h3><center>Get log for the last :</center></h3>
+    <h3><center>Choose an option :</center></h3>
     <center>
      <TABLE BORDER="0">
       <TR>
+        
+       <TD>
+        <FORM METHOD="LINK" ACTION="/application/">
+         <INPUT TYPE="submit" VALUE="Back to stream">
+        </FORM>
+       </TD>
+
        <TD>
         <FORM METHOD="LINK" ACTION="/application/temperature/6">
-         <INPUT TYPE="submit" VALUE="6 Hours">
+         <INPUT TYPE="submit" VALUE="see log - 6 Hours">
         </FORM>
        </TD>
 
        <TD>
         <FORM METHOD="LINK" ACTION="/application/temperature/12">
-         <INPUT TYPE="submit" VALUE="12 Hours">
+         <INPUT TYPE="submit" VALUE="see log - 12 Hours">
         </FORM>
        </TD>
 
        <TD>
         <FORM METHOD="LINK" ACTION="/application/temperature/24">
-         <INPUT TYPE="submit" VALUE="24 Hours">
+         <INPUT TYPE="submit" VALUE="see log - 24 Hours">
         </FORM>
        </TD>
       </TR>
@@ -208,6 +215,9 @@ def make_html(option):
             {}
            <center>Sorry NO data found</center>
          </body>
+          <footer>
+            <center><span><h2>pacemPi 2014</h2></span></center>
+          </footer>
         </html> """.format(time_selector())
 
     # start printing the page
@@ -224,7 +234,13 @@ def make_html(option):
     HTML += time_selector()
     HTML += show_graph()
     HTML += show_stats(option)
-    HTML += "</center>\n</body>"
-    HTML += "\n</html>"
+    HTML += """
+   </center>
+    <footer>
+      <center><span><h2>pacemPi 2014</h2></span></center>
+     </footer>
+    <hr>
+   </body>
+  </html>"""
     sys.stdout.flush()
     return HTML

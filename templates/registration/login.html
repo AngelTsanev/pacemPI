@@ -9,9 +9,10 @@
 
 {% block body %}
   <header>
-    <h1>Login Page</h1>
+    <center><h1>Login Page</h1></center>
+  <hr>
   </header>
-
+  <center>
   <section>
     {% if form.errors %}
       <p>Your username and password didn't match, please try again.</p>
@@ -20,11 +21,11 @@
     <form method="post" action=".">
       {% csrf_token %}
       <p>
-        <label for="id_username">Username:</label>
+        <label for="id_username">Username: </label>
         {{ form.username }}
       </p>
       <p>
-        <label for="id_password">Password:</label>
+        <label for="id_password">Password: </label>
         {{ form.password }}
       </p>
       {% if next %}
@@ -35,4 +36,9 @@
       <input type="submit" value="login" />
     </form>
   </section>
+  </center>
+  <hr>  
+  <footer>
+   <center><h2><span>PacemPI</span></h2></center>
+  </footer>
 {% endblock %}
